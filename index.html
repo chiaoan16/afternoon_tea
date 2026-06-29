@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>☕ 下午茶大家來分享</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f4f0;
+      color: #1a1a18;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 680px; margin: 0 auto; }
+
+    h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+    .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
+
+    .card {
+      background: #fff;
+      border: 0.5px solid #ddd;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 12px; color: #888; }
+    input, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 14px;
+      border: 0.5px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      color: #1a1a18;
+      outline: none;
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+    input:focus, textarea:focus { border-color: #4a90d9; box-shadow: 0 0 0 3px rgba(74,144,217,0.12); }
+    textarea { resize: vertical; min-height: 64px; }
+
+    .tag-select { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .tag-opt {
+      cursor: pointer; font-size: 12px; padding: 4px 12px;
+      border-radius: 20px; border: 0.5px solid #ccc;
+      color: #555; background: #f5f4f0;
+      transition: all 0.15s; user-select: none;
+    }
+    .tag-opt.selected { background: #e8f1fb; border-color: #4a90d9; color: #185fa5; }
+
+    .stars { display: flex; gap: 4px; margin-bottom: 8px; }
+    .star { font-size: 20px; cursor: pointer; color: #ccc; transition: color 0.1s; }
+    .star.on { color: #f5a623; }
+
+    .submit-btn {
+      width: 100%; padding: 10px;
+      font-size: 14px; font-weight: 500;
+      border: 0.5px solid #ccc; border-radius: 8px;
+      background: #fff; color: #1a1a18;
+      cursor: pointer; transition: all 0.15s;
+      font-family: inherit;
+    }
+    .submit-btn:hover { background: #f5f4f0; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .status { font-size: 12px; text-align: center; padding: 6px 0; min-height: 24px; }
+    .status.success { color: #2e7d32; }
+    .status.error { color: #c62828; }
+
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .section-title { font-size: 13px; font-weight: 500; color: #555; }
+    .refresh-btn {
+      font-size: 12px; color: #4a90d9;
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 3px;
+      font-family: inherit;
+    }
+    .refresh-btn:hover { text-decoration: underline; }
+
+    .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+    .filter-label { font-size: 12px; color: #888; }
+    .filter-btn {
+      font-size: 12px; padding: 4px 10px;
+      border-radius: 20px; border: 0.5px solid #ccc;
+      background: #f5f4f0; color: #555;
+      cursor: pointer; transition: all 0.15s;
+      font-family: inherit;
+    }
+    .filter-btn.active { background: #e8f1fb; border-color: #4a90d9; color: #185fa5; }
+
+    .posts { display: flex; flex-direction: column; gap: 10px; }
+    .post {
+      background: #fff; border: 0.5px solid #ddd;
+      border-radius: 12px; padding: 1rem 1.25rem;
+    }
+    .post-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .post-name { font-size: 15px; font-weight: 500; }
+    .post-place { font-size: 13px; color: #666; margin-top: 2px; }
+    .post-rating { font-size: 14px; color: #f5a623; }
+    .post-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px; }
+    .tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+    .tag-甜點 { background: #e8f1fb; color: #185fa5; }
+    .tag-鹹食 { background: #eaf3de; color: #3b6d11; }
+    .tag-飲料 { background: #fff7e6; color: #b76e00; }
+    .tag-輕食 { background: #fef3c7; color: #92400e; }
+    .tag-素食 { background: #f0f9f0; color: #2e7d32; }
+    .post-desc { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+    .post-footer { display: flex; justify-content: space-between; align-items: center; }
+    .post-price { font-size: 13px; color: #888; }
+    .post-date { font-size: 11px; color: #aaa; }
+
+    .empty { text-align: center; padding: 2.5rem; color: #aaa; font-size: 14px; }
+    .loading { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>☕ 下午茶大家來分享</h1>
+    <p class="subtitle">把你找到的好吃下午茶分享給大家！資料即時同步，所有人都看得到。</p>
+
+    <div class="card">
+      <div class="card-title">＋ 分享新發現</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>你的名字</label>
+          <input type="text" id="inp-name" placeholder="例：Joann">
+        </div>
+        <div class="form-group">
+          <label>店名 / 品項</label>
+          <input type="text" id="inp-place" placeholder="例：Joyce East 可頌">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>在哪裡買到</label>
+          <input type="text" id="inp-loc" placeholder="例：信義區、網購">
+        </div>
+        <div class="form-group">
+          <label>大約價位</label>
+          <input type="text" id="inp-price" placeholder="例：$80 / 個">
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label>類型標籤</label>
+        <div class="tag-select" id="tag-select">
+          <span class="tag-opt" data-tag="甜點">🍰 甜點</span>
+          <span class="tag-opt" data-tag="鹹食">🥐 鹹食</span>
+          <span class="tag-opt" data-tag="飲料">🧋 飲料</span>
+          <span class="tag-opt" data-tag="輕食">🥗 輕食</span>
+          <span class="tag-opt" data-tag="素食">🌿 素食</span>
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:10px">
+        <label>推薦理由 / 心得</label>
+        <textarea id="inp-desc" placeholder="說說為什麼好吃、有什麼特別之處..."></textarea>
+      </div>
+      <div class="form-group" style="margin-bottom:6px">
+        <label>推薦程度</label>
+        <div class="stars" id="stars">
+          <span class="star" data-v="1">★</span>
+          <span class="star" data-v="2">★</span>
+          <span class="star" data-v="3">★</span>
+          <span class="star" data-v="4">★</span>
+          <span class="star" data-v="5">★</span>
+        </div>
+      </div>
+      <div id="submit-status" class="status"></div>
+      <button class="submit-btn" id="submit-btn" onclick="addPost()">分享出去 →</button>
+    </div>
+
+    <div class="filter-bar">
+      <span class="filter-label">篩選：</span>
+      <button class="filter-btn active" onclick="setFilter('全部', this)">全部</button>
+      <button class="filter-btn" onclick="setFilter('甜點', this)">🍰 甜點</button>
+      <button class="filter-btn" onclick="setFilter('鹹食', this)">🥐 鹹食</button>
+      <button class="filter-btn" onclick="setFilter('飲料', this)">🧋 飲料</button>
+      <button class="filter-btn" onclick="setFilter('輕食', this)">🥗 輕食</button>
+      <button class="filter-btn" onclick="setFilter('素食', this)">🌿 素食</button>
+    </div>
+
+    <div class="section-header">
+      <span class="section-title" id="post-count">大家的分享</span>
+      <button class="refresh-btn" onclick="loadPosts()">↻ 重新整理</button>
+    </div>
+
+    <div id="posts-list" class="posts">
+      <div class="loading">載入中...</div>
+    </div>
+  </div>
+
+  <script>
+    const API = 'https://script.google.com/macros/s/AKfycbyj2n9001mhIpzQFWohbHkzC9xXxKv-9MxjZGA3SUAN7fMONUeQDrDbF2sYoO_pq0UE5Q/exec';
+    let allPosts = [];
+    let selectedTags = [];
+    let selectedRating = 0;
+    let currentFilter = '全部';
+
+    function esc(s) {
+      if (!s) return '';
+      const d = document.createElement('div');
+      d.textContent = String(s);
+      return d.innerHTML;
+    }
+    function tagEmoji(t) {
+      return { 甜點: '🍰', 鹹食: '🥐', 飲料: '🧋', 輕食: '🥗', 素食: '🌿' }[t] || '';
+    }
+
+    async function loadPosts() {
+      document.getElementById('posts-list').innerHTML = '<div class="loading">載入中...</div>';
+      try {
+        const res = await fetch(API);
+        const raw = await res.json();
+        allPosts = raw.map((r, i) => ({
+          id: i,
+          name: r['名字'] || '',
+          place: r['店名/品項'] || '',
+          loc: r['地點'] || '',
+          price: r['價位'] || '',
+          tags: r['類型'] ? r['類型'].split(', ').filter(Boolean) : [],
+          desc: r['推薦心得'] || '',
+          rating: parseInt(r['評分']) || 3,
+          time: r['時間'] || ''
+        }));
+        render();
+      } catch (e) {
+        document.getElementById('posts-list').innerHTML = '<div class="empty">⚠️ 無法載入資料，請確認網路連線</div>';
+      }
+    }
+
+    function render() {
+      const list = document.getElementById('posts-list');
+      const filtered = currentFilter === '全部' ? allPosts : allPosts.filter(p => p.tags.includes(currentFilter));
+      document.getElementById('post-count').textContent = '大家的分享（' + filtered.length + ' 筆）';
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="empty">還沒有分享，快來第一個推薦！</div>';
+        return;
+      }
+      list.innerHTML = filtered.slice().reverse().map(p => `
+        <div class="post">
+          <div class="post-header">
+            <div>
+              <div class="post-name">${esc(p.name)} 推薦</div>
+              <div class="post-place">📍 ${esc(p.place)}${p.loc ? ' · ' + esc(p.loc) : ''}</div>
+            </div>
+            <div class="post-rating">${'★'.repeat(p.rating)}<span style="color:#ddd">${'★'.repeat(5 - p.rating)}</span></div>
+          </div>
+          ${p.tags.length ? '<div class="post-tags">' + p.tags.map(t => `<span class="tag tag-${t}">${tagEmoji(t)} ${t}</span>`).join('') + '</div>' : ''}
+          ${p.desc ? `<div class="post-desc">${esc(p.desc)}</div>` : ''}
+          <div class="post-footer">
+            <span class="post-price">${p.price ? '💰 ' + esc(p.price) : ''}</span>
+            ${p.time ? `<span class="post-date">${new Date(p.time).toLocaleDateString('zh-TW')}</span>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function addPost() {
+      const name = document.getElementById('inp-name').value.trim();
+      const place = document.getElementById('inp-place').value.trim();
+      if (!name || !place) { setStatus('請填寫名字和店名/品項！', 'error'); return; }
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = '送出中...';
+      setStatus('', '');
+      const payload = {
+        name, place,
+        loc: document.getElementById('inp-loc').value.trim(),
+        price: document.getElementById('inp-price').value.trim(),
+        tags: [...selectedTags],
+        desc: document.getElementById('inp-desc').value.trim(),
+        rating: selectedRating || 3
+      };
+      try {
+        await fetch(API, { method: 'POST', body: JSON.stringify(payload) });
+        document.getElementById('inp-name').value = '';
+        document.getElementById('inp-place').value = '';
+        document.getElementById('inp-loc').value = '';
+        document.getElementById('inp-price').value = '';
+        document.getElementById('inp-desc').value = '';
+        selectedTags = [];
+        selectedRating = 0;
+        document.querySelectorAll('.tag-opt').forEach(el => el.classList.remove('selected'));
+        updateStars(0);
+        setStatus('分享成功！✅', 'success');
+        await loadPosts();
+      } catch (e) {
+        setStatus('送出失敗，請稍後再試', 'error');
+      }
+      btn.disabled = false;
+      btn.textContent = '分享出去 →';
+    }
+
+    function setStatus(msg, type) {
+      const el = document.getElementById('submit-status');
+      el.textContent = msg;
+      el.className = 'status ' + type;
+    }
+
+    function setFilter(tag, btn) {
+      currentFilter = tag;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    }
+
+    function updateStars(val) {
+      document.querySelectorAll('.star').forEach((s, i) => {
+        s.classList.toggle('on', i < val);
+      });
+    }
+
+    document.querySelectorAll('.tag-opt').forEach(el => {
+      el.addEventListener('click', () => {
+        const t = el.dataset.tag;
+        if (selectedTags.includes(t)) {
+          selectedTags = selectedTags.filter(x => x !== t);
+          el.classList.remove('selected');
+        } else {
+          selectedTags.push(t);
+          el.classList.add('selected');
+        }
+      });
+    });
+
+    document.querySelectorAll('.star').forEach(s => {
+      s.addEventListener('click', () => {
+        selectedRating = parseInt(s.dataset.v);
+        updateStars(selectedRating);
+      });
+    });
+
+    loadPosts();
+  </script>
+</body>
+</html>
