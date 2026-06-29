@@ -8,22 +8,15 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      background: #f5f4f0;
-      color: #1a1a18;
-      min-height: 100vh;
-      padding: 2rem 1rem;
+      background: #f5f4f0; color: #1a1a18; min-height: 100vh; padding: 2rem 1rem;
     }
     .container { max-width: 680px; margin: 0 auto; }
     h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
     .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
-    .card {
-      background: #fff;
-      border: 0.5px solid #ddd;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.25rem;
-    }
+    .card { background: #fff; border: 0.5px solid #ddd; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
     .card-title { font-size: 14px; font-weight: 500; color: #555; margin-bottom: 12px; }
+    .editing-banner { font-size: 12px; color: #185fa5; background: #e8f1fb; border-radius: 6px; padding: 6px 10px; margin-bottom: 10px; display: none; }
+    .editing-banner.show { display: block; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
@@ -40,30 +33,35 @@
     .tag-opt {
       cursor: pointer; font-size: 12px; padding: 4px 12px;
       border-radius: 20px; border: 0.5px solid #ccc;
-      color: #555; background: #f5f4f0;
-      transition: all 0.15s; user-select: none;
+      color: #555; background: #f5f4f0; transition: all 0.15s; user-select: none;
     }
     .tag-opt.selected { background: #e8f1fb; border-color: #4a90d9; color: #185fa5; }
     .stars { display: flex; gap: 4px; margin-bottom: 8px; }
     .star { font-size: 20px; cursor: pointer; color: #ccc; transition: color 0.1s; }
     .star.on { color: #f5a623; }
+    .btn-row { display: flex; gap: 8px; }
     .submit-btn {
-      width: 100%; padding: 10px; font-size: 14px; font-weight: 500;
+      flex: 1; padding: 10px; font-size: 14px; font-weight: 500;
       border: 0.5px solid #ccc; border-radius: 8px;
-      background: #fff; color: #1a1a18;
-      cursor: pointer; transition: all 0.15s; font-family: inherit;
+      background: #fff; color: #1a1a18; cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
     }
     .submit-btn:hover { background: #f5f4f0; }
     .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .cancel-btn {
+      padding: 10px 16px; font-size: 14px;
+      border: 0.5px solid #ccc; border-radius: 8px;
+      background: #fff; color: #888; cursor: pointer;
+      transition: all 0.15s; font-family: inherit; display: none;
+    }
+    .cancel-btn.show { display: block; }
+    .cancel-btn:hover { background: #f5f4f0; }
     .status { font-size: 12px; text-align: center; padding: 6px 0; min-height: 24px; }
     .status.success { color: #2e7d32; }
     .status.error { color: #c62828; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     .section-title { font-size: 13px; font-weight: 500; color: #555; }
-    .refresh-btn {
-      font-size: 12px; color: #4a90d9; background: none; border: none;
-      cursor: pointer; font-family: inherit;
-    }
+    .refresh-btn { font-size: 12px; color: #4a90d9; background: none; border: none; cursor: pointer; font-family: inherit; }
     .refresh-btn:hover { text-decoration: underline; }
     .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
     .filter-label { font-size: 12px; color: #888; }
@@ -74,7 +72,7 @@
     }
     .filter-btn.active { background: #e8f1fb; border-color: #4a90d9; color: #185fa5; }
     .posts { display: flex; flex-direction: column; gap: 10px; }
-    .post { background: #fff; border: 0.5px solid #ddd; border-radius: 12px; padding: 1rem 1.25rem; position: relative; }
+    .post { background: #fff; border: 0.5px solid #ddd; border-radius: 12px; padding: 1rem 1.25rem; }
     .post-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
     .post-name { font-size: 15px; font-weight: 500; }
     .post-place { font-size: 13px; color: #666; margin-top: 2px; }
@@ -90,25 +88,21 @@
     .post-footer { display: flex; justify-content: space-between; align-items: center; }
     .post-price { font-size: 13px; color: #888; }
     .post-date { font-size: 11px; color: #aaa; }
-    .delete-btn {
-      font-size: 11px; color: #aaa; background: none;
-      border: 0.5px solid #ddd; border-radius: 6px;
-      padding: 3px 8px; cursor: pointer; font-family: inherit;
-      transition: all 0.15s;
+    .post-actions { display: flex; align-items: center; gap: 6px; }
+    .action-btn {
+      font-size: 11px; background: none; border: 0.5px solid #ddd;
+      border-radius: 6px; padding: 3px 8px; cursor: pointer;
+      font-family: inherit; transition: all 0.15s; color: #888;
     }
-    .delete-btn:hover { color: #c62828; border-color: #c62828; background: #fff5f5; }
-
-    /* Modal */
+    .action-btn.edit:hover { color: #185fa5; border-color: #4a90d9; background: #e8f1fb; }
+    .action-btn.del:hover { color: #c62828; border-color: #c62828; background: #fff5f5; }
     .modal-bg {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.4); z-index: 100;
       align-items: center; justify-content: center;
     }
     .modal-bg.show { display: flex; }
-    .modal {
-      background: #fff; border-radius: 12px;
-      padding: 1.5rem; width: 300px; max-width: 90vw;
-    }
+    .modal { background: #fff; border-radius: 12px; padding: 1.5rem; width: 300px; max-width: 90vw; }
     .modal h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
     .modal p { font-size: 13px; color: #666; margin-bottom: 12px; }
     .modal input { margin-bottom: 8px; }
@@ -120,8 +114,9 @@
     }
     .modal-btns .confirm-btn { background: #fee2e2; border-color: #fca5a5; color: #c62828; }
     .modal-btns .confirm-btn:hover { background: #fecaca; }
+    .modal-btns .confirm-edit-btn { background: #e8f1fb; border-color: #4a90d9; color: #185fa5; }
+    .modal-btns .confirm-edit-btn:hover { background: #dbeafe; }
     .modal-status { font-size: 12px; color: #c62828; min-height: 18px; margin-bottom: 6px; }
-
     .empty { text-align: center; padding: 2.5rem; color: #aaa; font-size: 14px; }
     .loading { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
   </style>
@@ -132,7 +127,8 @@
     <p class="subtitle">把你找到的好吃下午茶分享給大家！資料即時同步，所有人都看得到。</p>
 
     <div class="card">
-      <div class="card-title">＋ 分享新發現</div>
+      <div class="card-title" id="form-title">＋ 分享新發現</div>
+      <div class="editing-banner" id="editing-banner">✏️ 編輯模式：修改完成後按「更新」</div>
       <div class="form-row">
         <div class="form-group">
           <label>你的名字</label>
@@ -169,7 +165,7 @@
       </div>
       <div class="form-group" style="margin-bottom:6px">
         <label>推薦程度</label>
-        <div class="stars" id="stars">
+        <div class="stars">
           <span class="star" data-v="1">★</span>
           <span class="star" data-v="2">★</span>
           <span class="star" data-v="3">★</span>
@@ -178,7 +174,10 @@
         </div>
       </div>
       <div id="submit-status" class="status"></div>
-      <button class="submit-btn" id="submit-btn" onclick="addPost()">分享出去 →</button>
+      <div class="btn-row">
+        <button class="submit-btn" id="submit-btn" onclick="submitForm()">分享出去 →</button>
+        <button class="cancel-btn" id="cancel-btn" onclick="cancelEdit()">取消</button>
+      </div>
     </div>
 
     <div class="filter-bar">
@@ -195,22 +194,33 @@
       <span class="section-title" id="post-count">大家的分享</span>
       <button class="refresh-btn" onclick="loadPosts()">↻ 重新整理</button>
     </div>
+    <div id="posts-list" class="posts"><div class="loading">載入中...</div></div>
+  </div>
 
-    <div id="posts-list" class="posts">
-      <div class="loading">載入中...</div>
+  <!-- 刪除 Modal -->
+  <div class="modal-bg" id="del-modal-bg">
+    <div class="modal">
+      <h3>🗑 確認刪除</h3>
+      <p id="del-modal-desc">確定要刪除這筆分享嗎？</p>
+      <input type="password" id="del-modal-pw" placeholder="請輸入密碼">
+      <div class="modal-status" id="del-modal-status"></div>
+      <div class="modal-btns">
+        <button onclick="closeDelModal()">取消</button>
+        <button class="confirm-btn" onclick="confirmDelete()">確認刪除</button>
+      </div>
     </div>
   </div>
 
-  <!-- 刪除確認 Modal -->
-  <div class="modal-bg" id="modal-bg">
+  <!-- 編輯密碼 Modal -->
+  <div class="modal-bg" id="edit-modal-bg">
     <div class="modal">
-      <h3>🗑 確認刪除</h3>
-      <p id="modal-desc">確定要刪除這筆分享嗎？</p>
-      <input type="password" id="modal-pw" placeholder="請輸入密碼">
-      <div class="modal-status" id="modal-status"></div>
+      <h3>✏️ 確認編輯</h3>
+      <p id="edit-modal-desc">請輸入密碼以編輯這筆分享</p>
+      <input type="password" id="edit-modal-pw" placeholder="請輸入密碼">
+      <div class="modal-status" id="edit-modal-status"></div>
       <div class="modal-btns">
-        <button onclick="closeModal()">取消</button>
-        <button class="confirm-btn" onclick="confirmDelete()">確認刪除</button>
+        <button onclick="closeEditModal()">取消</button>
+        <button class="confirm-edit-btn" onclick="confirmEdit()">確認</button>
       </div>
     </div>
   </div>
@@ -221,6 +231,7 @@
     let selectedTags = [];
     let selectedRating = 0;
     let currentFilter = '全部';
+    let editTarget = null;
     let deleteTarget = null;
 
     function esc(s) {
@@ -238,7 +249,7 @@
       try {
         const res = await fetch(API, { mode: 'cors' });
         const raw = await res.json();
-        allPosts = raw.map((r) => ({
+        allPosts = raw.map(r => ({
           rowIndex: r['rowIndex'],
           name: r['名字'] || '',
           place: r['店名/品項'] || '',
@@ -270,52 +281,93 @@
               <div class="post-name">${esc(p.name)} 推薦</div>
               <div class="post-place">📍 ${esc(p.place)}${p.loc ? ' · ' + esc(p.loc) : ''}</div>
             </div>
-            <div class="post-rating">${'★'.repeat(p.rating)}<span style="color:#ddd">${'★'.repeat(5 - p.rating)}</span></div>
+            <div class="post-rating">${'★'.repeat(p.rating)}<span style="color:#ddd">${'★'.repeat(5-p.rating)}</span></div>
           </div>
-          ${p.tags.length ? '<div class="post-tags">' + p.tags.map(t => `<span class="tag tag-${t}">${tagEmoji(t)} ${t}</span>`).join('') + '</div>' : ''}
+          ${p.tags.length ? '<div class="post-tags">'+p.tags.map(t=>`<span class="tag tag-${t}">${tagEmoji(t)} ${t}</span>`).join('')+'</div>' : ''}
           ${p.desc ? `<div class="post-desc">${esc(p.desc)}</div>` : ''}
           <div class="post-footer">
-            <span class="post-price">${p.price ? '💰 ' + esc(p.price) : ''}</span>
-            <div style="display:flex;align-items:center;gap:8px;">
+            <span class="post-price">${p.price ? '💰 '+esc(p.price) : ''}</span>
+            <div class="post-actions">
               ${p.time ? `<span class="post-date">${new Date(p.time).toLocaleDateString('zh-TW')}</span>` : ''}
-              <button class="delete-btn" onclick="openModal(${p.rowIndex}, '${esc(p.place)}')">🗑 刪除</button>
+              <button class="action-btn edit" onclick="openEditModal(${p.rowIndex})">✏️ 編輯</button>
+              <button class="action-btn del" onclick="openDelModal(${p.rowIndex}, '${esc(p.place)}')">🗑 刪除</button>
             </div>
           </div>
         </div>
       `).join('');
     }
 
-    function openModal(rowIndex, placeName) {
-      deleteTarget = rowIndex;
-      document.getElementById('modal-desc').textContent = '確定要刪除「' + placeName + '」這筆分享嗎？';
-      document.getElementById('modal-pw').value = '';
-      document.getElementById('modal-status').textContent = '';
-      document.getElementById('modal-bg').classList.add('show');
+    // ── 編輯流程 ──
+    function openEditModal(rowIndex) {
+      editTarget = rowIndex;
+      document.getElementById('edit-modal-pw').value = '';
+      document.getElementById('edit-modal-status').textContent = '';
+      document.getElementById('edit-modal-bg').classList.add('show');
+    }
+    function closeEditModal() {
+      document.getElementById('edit-modal-bg').classList.remove('show');
+      editTarget = null;
+    }
+    function confirmEdit() {
+      const pw = document.getElementById('edit-modal-pw').value;
+      if (!pw) { document.getElementById('edit-modal-status').textContent = '請輸入密碼'; return; }
+      if (pw !== '1234') { document.getElementById('edit-modal-status').textContent = '密碼錯誤'; return; }
+      const post = allPosts.find(p => p.rowIndex === editTarget);
+      if (!post) return;
+      closeEditModal();
+      loadPostIntoForm(post);
+    }
+    function loadPostIntoForm(post) {
+      editTarget = post.rowIndex;
+      document.getElementById('inp-name').value = post.name;
+      document.getElementById('inp-place').value = post.place;
+      document.getElementById('inp-loc').value = post.loc;
+      document.getElementById('inp-price').value = post.price;
+      document.getElementById('inp-desc').value = post.desc;
+      selectedTags = [...post.tags];
+      document.querySelectorAll('.tag-opt').forEach(el => {
+        el.classList.toggle('selected', selectedTags.includes(el.dataset.tag));
+      });
+      selectedRating = post.rating;
+      updateStars(selectedRating);
+      document.getElementById('form-title').textContent = '✏️ 編輯分享';
+      document.getElementById('editing-banner').classList.add('show');
+      document.getElementById('submit-btn').textContent = '更新 →';
+      document.getElementById('cancel-btn').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function cancelEdit() {
+      editTarget = null;
+      resetForm();
     }
 
-    function closeModal() {
-      document.getElementById('modal-bg').classList.remove('show');
+    // ── 刪除流程 ──
+    function openDelModal(rowIndex, placeName) {
+      deleteTarget = rowIndex;
+      document.getElementById('del-modal-desc').textContent = '確定要刪除「' + placeName + '」這筆分享嗎？';
+      document.getElementById('del-modal-pw').value = '';
+      document.getElementById('del-modal-status').textContent = '';
+      document.getElementById('del-modal-bg').classList.add('show');
+    }
+    function closeDelModal() {
+      document.getElementById('del-modal-bg').classList.remove('show');
       deleteTarget = null;
     }
-
     async function confirmDelete() {
-      const pw = document.getElementById('modal-pw').value;
-      if (!pw) { document.getElementById('modal-status').textContent = '請輸入密碼'; return; }
-      document.getElementById('modal-status').textContent = '處理中...';
+      const pw = document.getElementById('del-modal-pw').value;
+      if (!pw) { document.getElementById('del-modal-status').textContent = '請輸入密碼'; return; }
+      document.getElementById('del-modal-status').textContent = '處理中...';
       try {
-        await fetch(API, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: JSON.stringify({ action: 'delete', rowIndex: deleteTarget, password: pw })
-        });
-        closeModal();
+        await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'delete', rowIndex: deleteTarget, password: pw }) });
+        closeDelModal();
         setTimeout(loadPosts, 800);
       } catch(e) {
-        document.getElementById('modal-status').textContent = '刪除失敗，請稍後再試';
+        document.getElementById('del-modal-status').textContent = '刪除失敗，請稍後再試';
       }
     }
 
-    async function addPost() {
+    // ── 新增 / 更新 ──
+    async function submitForm() {
       const name = document.getElementById('inp-name').value.trim();
       const place = document.getElementById('inp-place').value.trim();
       if (!name || !place) { setStatus('請填寫名字和店名/品項！', 'error'); return; }
@@ -331,24 +383,34 @@
         desc: document.getElementById('inp-desc').value.trim(),
         rating: selectedRating || 3
       };
+      if (editTarget !== null) payload.action = 'update', payload.rowIndex = editTarget, payload.password = '1234';
       try {
-        await fetch(API, { method: 'POST', body: JSON.stringify(payload), mode: 'no-cors' });
-        document.getElementById('inp-name').value = '';
-        document.getElementById('inp-place').value = '';
-        document.getElementById('inp-loc').value = '';
-        document.getElementById('inp-price').value = '';
-        document.getElementById('inp-desc').value = '';
-        selectedTags = [];
-        selectedRating = 0;
-        document.querySelectorAll('.tag-opt').forEach(el => el.classList.remove('selected'));
-        updateStars(0);
-        setStatus('分享成功！✅', 'success');
-        await loadPosts();
-      } catch (e) {
+        await fetch(API, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
+        setStatus(editTarget !== null ? '更新成功！✅' : '分享成功！✅', 'success');
+        resetForm();
+        setTimeout(loadPosts, 800);
+      } catch(e) {
         setStatus('送出失敗，請稍後再試', 'error');
       }
       btn.disabled = false;
-      btn.textContent = '分享出去 →';
+    }
+
+    function resetForm() {
+      editTarget = null;
+      document.getElementById('inp-name').value = '';
+      document.getElementById('inp-place').value = '';
+      document.getElementById('inp-loc').value = '';
+      document.getElementById('inp-price').value = '';
+      document.getElementById('inp-desc').value = '';
+      selectedTags = [];
+      selectedRating = 0;
+      document.querySelectorAll('.tag-opt').forEach(el => el.classList.remove('selected'));
+      updateStars(0);
+      document.getElementById('form-title').textContent = '＋ 分享新發現';
+      document.getElementById('editing-banner').classList.remove('show');
+      document.getElementById('submit-btn').textContent = '分享出去 →';
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('cancel-btn').classList.remove('show');
     }
 
     function setStatus(msg, type) {
@@ -356,43 +418,28 @@
       el.textContent = msg;
       el.className = 'status ' + type;
     }
-
     function setFilter(tag, btn) {
       currentFilter = tag;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       render();
     }
-
     function updateStars(val) {
-      document.querySelectorAll('.star').forEach((s, i) => {
-        s.classList.toggle('on', i < val);
-      });
+      document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('on', i < val));
     }
 
     document.querySelectorAll('.tag-opt').forEach(el => {
       el.addEventListener('click', () => {
         const t = el.dataset.tag;
-        if (selectedTags.includes(t)) {
-          selectedTags = selectedTags.filter(x => x !== t);
-          el.classList.remove('selected');
-        } else {
-          selectedTags.push(t);
-          el.classList.add('selected');
-        }
+        if (selectedTags.includes(t)) { selectedTags = selectedTags.filter(x => x !== t); el.classList.remove('selected'); }
+        else { selectedTags.push(t); el.classList.add('selected'); }
       });
     });
-
     document.querySelectorAll('.star').forEach(s => {
-      s.addEventListener('click', () => {
-        selectedRating = parseInt(s.dataset.v);
-        updateStars(selectedRating);
-      });
+      s.addEventListener('click', () => { selectedRating = parseInt(s.dataset.v); updateStars(selectedRating); });
     });
-
-    document.getElementById('modal-bg').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
+    document.getElementById('del-modal-bg').addEventListener('click', function(e) { if (e.target===this) closeDelModal(); });
+    document.getElementById('edit-modal-bg').addEventListener('click', function(e) { if (e.target===this) closeEditModal(); });
 
     loadPosts();
   </script>
