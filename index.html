@@ -14,10 +14,8 @@
       padding: 2rem 1rem;
     }
     .container { max-width: 680px; margin: 0 auto; }
-
     h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
     .subtitle { font-size: 14px; color: #666; margin-bottom: 1.5rem; }
-
     .card {
       background: #fff;
       border: 0.5px solid #ddd;
@@ -25,35 +23,19 @@
       padding: 1rem 1.25rem;
       margin-bottom: 1.25rem;
     }
-    .card-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: #555;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
+    .card-title { font-size: 14px; font-weight: 500; color: #555; margin-bottom: 12px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
     .form-group { display: flex; flex-direction: column; gap: 4px; }
     label { font-size: 12px; color: #888; }
     input, textarea {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 14px;
-      border: 0.5px solid #ccc;
-      border-radius: 8px;
-      background: #fff;
-      color: #1a1a18;
-      outline: none;
-      transition: border-color 0.15s;
-      font-family: inherit;
+      width: 100%; padding: 8px 10px; font-size: 14px;
+      border: 0.5px solid #ccc; border-radius: 8px;
+      background: #fff; color: #1a1a18; outline: none;
+      transition: border-color 0.15s; font-family: inherit;
     }
     input:focus, textarea:focus { border-color: #4a90d9; box-shadow: 0 0 0 3px rgba(74,144,217,0.12); }
     textarea { resize: vertical; min-height: 64px; }
-
     .tag-select { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
     .tag-opt {
       cursor: pointer; font-size: 12px; padding: 4px 12px;
@@ -62,55 +44,37 @@
       transition: all 0.15s; user-select: none;
     }
     .tag-opt.selected { background: #e8f1fb; border-color: #4a90d9; color: #185fa5; }
-
     .stars { display: flex; gap: 4px; margin-bottom: 8px; }
     .star { font-size: 20px; cursor: pointer; color: #ccc; transition: color 0.1s; }
     .star.on { color: #f5a623; }
-
     .submit-btn {
-      width: 100%; padding: 10px;
-      font-size: 14px; font-weight: 500;
+      width: 100%; padding: 10px; font-size: 14px; font-weight: 500;
       border: 0.5px solid #ccc; border-radius: 8px;
       background: #fff; color: #1a1a18;
-      cursor: pointer; transition: all 0.15s;
-      font-family: inherit;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
     }
     .submit-btn:hover { background: #f5f4f0; }
     .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
     .status { font-size: 12px; text-align: center; padding: 6px 0; min-height: 24px; }
     .status.success { color: #2e7d32; }
     .status.error { color: #c62828; }
-
-    .section-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 10px;
-    }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     .section-title { font-size: 13px; font-weight: 500; color: #555; }
     .refresh-btn {
-      font-size: 12px; color: #4a90d9;
-      background: none; border: none; cursor: pointer;
-      display: flex; align-items: center; gap: 3px;
-      font-family: inherit;
+      font-size: 12px; color: #4a90d9; background: none; border: none;
+      cursor: pointer; font-family: inherit;
     }
     .refresh-btn:hover { text-decoration: underline; }
-
     .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
     .filter-label { font-size: 12px; color: #888; }
     .filter-btn {
-      font-size: 12px; padding: 4px 10px;
-      border-radius: 20px; border: 0.5px solid #ccc;
-      background: #f5f4f0; color: #555;
-      cursor: pointer; transition: all 0.15s;
-      font-family: inherit;
+      font-size: 12px; padding: 4px 10px; border-radius: 20px;
+      border: 0.5px solid #ccc; background: #f5f4f0; color: #555;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
     }
     .filter-btn.active { background: #e8f1fb; border-color: #4a90d9; color: #185fa5; }
-
     .posts { display: flex; flex-direction: column; gap: 10px; }
-    .post {
-      background: #fff; border: 0.5px solid #ddd;
-      border-radius: 12px; padding: 1rem 1.25rem;
-    }
+    .post { background: #fff; border: 0.5px solid #ddd; border-radius: 12px; padding: 1rem 1.25rem; position: relative; }
     .post-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
     .post-name { font-size: 15px; font-weight: 500; }
     .post-place { font-size: 13px; color: #666; margin-top: 2px; }
@@ -126,6 +90,37 @@
     .post-footer { display: flex; justify-content: space-between; align-items: center; }
     .post-price { font-size: 13px; color: #888; }
     .post-date { font-size: 11px; color: #aaa; }
+    .delete-btn {
+      font-size: 11px; color: #aaa; background: none;
+      border: 0.5px solid #ddd; border-radius: 6px;
+      padding: 3px 8px; cursor: pointer; font-family: inherit;
+      transition: all 0.15s;
+    }
+    .delete-btn:hover { color: #c62828; border-color: #c62828; background: #fff5f5; }
+
+    /* Modal */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4); z-index: 100;
+      align-items: center; justify-content: center;
+    }
+    .modal-bg.show { display: flex; }
+    .modal {
+      background: #fff; border-radius: 12px;
+      padding: 1.5rem; width: 300px; max-width: 90vw;
+    }
+    .modal h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+    .modal p { font-size: 13px; color: #666; margin-bottom: 12px; }
+    .modal input { margin-bottom: 8px; }
+    .modal-btns { display: flex; gap: 8px; }
+    .modal-btns button {
+      flex: 1; padding: 8px; font-size: 13px; border-radius: 8px;
+      border: 0.5px solid #ccc; cursor: pointer; font-family: inherit;
+      background: #fff; transition: all 0.15s;
+    }
+    .modal-btns .confirm-btn { background: #fee2e2; border-color: #fca5a5; color: #c62828; }
+    .modal-btns .confirm-btn:hover { background: #fecaca; }
+    .modal-status { font-size: 12px; color: #c62828; min-height: 18px; margin-bottom: 6px; }
 
     .empty { text-align: center; padding: 2.5rem; color: #aaa; font-size: 14px; }
     .loading { text-align: center; padding: 2rem; color: #aaa; font-size: 13px; }
@@ -206,12 +201,27 @@
     </div>
   </div>
 
+  <!-- 刪除確認 Modal -->
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal">
+      <h3>🗑 確認刪除</h3>
+      <p id="modal-desc">確定要刪除這筆分享嗎？</p>
+      <input type="password" id="modal-pw" placeholder="請輸入密碼">
+      <div class="modal-status" id="modal-status"></div>
+      <div class="modal-btns">
+        <button onclick="closeModal()">取消</button>
+        <button class="confirm-btn" onclick="confirmDelete()">確認刪除</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const API = 'https://script.google.com/macros/s/AKfycbyj2n9001mhIpzQFWohbHkzC9xXxKv-9MxjZGA3SUAN7fMONUeQDrDbF2sYoO_pq0UE5Q/exec';
     let allPosts = [];
     let selectedTags = [];
     let selectedRating = 0;
     let currentFilter = '全部';
+    let deleteTarget = null;
 
     function esc(s) {
       if (!s) return '';
@@ -228,8 +238,8 @@
       try {
         const res = await fetch(API, { mode: 'cors' });
         const raw = await res.json();
-        allPosts = raw.map((r, i) => ({
-          id: i,
+        allPosts = raw.map((r) => ({
+          rowIndex: r['rowIndex'],
           name: r['名字'] || '',
           place: r['店名/品項'] || '',
           loc: r['地點'] || '',
@@ -266,10 +276,43 @@
           ${p.desc ? `<div class="post-desc">${esc(p.desc)}</div>` : ''}
           <div class="post-footer">
             <span class="post-price">${p.price ? '💰 ' + esc(p.price) : ''}</span>
-            ${p.time ? `<span class="post-date">${new Date(p.time).toLocaleDateString('zh-TW')}</span>` : ''}
+            <div style="display:flex;align-items:center;gap:8px;">
+              ${p.time ? `<span class="post-date">${new Date(p.time).toLocaleDateString('zh-TW')}</span>` : ''}
+              <button class="delete-btn" onclick="openModal(${p.rowIndex}, '${esc(p.place)}')">🗑 刪除</button>
+            </div>
           </div>
         </div>
       `).join('');
+    }
+
+    function openModal(rowIndex, placeName) {
+      deleteTarget = rowIndex;
+      document.getElementById('modal-desc').textContent = '確定要刪除「' + placeName + '」這筆分享嗎？';
+      document.getElementById('modal-pw').value = '';
+      document.getElementById('modal-status').textContent = '';
+      document.getElementById('modal-bg').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-bg').classList.remove('show');
+      deleteTarget = null;
+    }
+
+    async function confirmDelete() {
+      const pw = document.getElementById('modal-pw').value;
+      if (!pw) { document.getElementById('modal-status').textContent = '請輸入密碼'; return; }
+      document.getElementById('modal-status').textContent = '處理中...';
+      try {
+        await fetch(API, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify({ action: 'delete', rowIndex: deleteTarget, password: pw })
+        });
+        closeModal();
+        setTimeout(loadPosts, 800);
+      } catch(e) {
+        document.getElementById('modal-status').textContent = '刪除失敗，請稍後再試';
+      }
     }
 
     async function addPost() {
@@ -345,6 +388,10 @@
         selectedRating = parseInt(s.dataset.v);
         updateStars(selectedRating);
       });
+    });
+
+    document.getElementById('modal-bg').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
     });
 
     loadPosts();
