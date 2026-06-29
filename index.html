@@ -226,7 +226,7 @@
     async function loadPosts() {
       document.getElementById('posts-list').innerHTML = '<div class="loading">載入中...</div>';
       try {
-        const res = await fetch(API);
+        const res = await fetch(API, { mode: 'cors' });
         const raw = await res.json();
         allPosts = raw.map((r, i) => ({
           id: i,
@@ -289,7 +289,7 @@
         rating: selectedRating || 3
       };
       try {
-        await fetch(API, { method: 'POST', body: JSON.stringify(payload) });
+        await fetch(API, { method: 'POST', body: JSON.stringify(payload), mode: 'no-cors' });
         document.getElementById('inp-name').value = '';
         document.getElementById('inp-place').value = '';
         document.getElementById('inp-loc').value = '';
